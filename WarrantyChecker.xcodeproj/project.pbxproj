@@ -203,6 +203,7 @@
 				675A1CEB18A99B7F002EBAA9 /* Resources */,
 				67A7A28518BC37B400FA5AC1 /* ShellScript */,
 				D16D9FB60207441BA9BBC93C /* Copy Pods Resources */,
+				C0CB54CF6A7F2D7019CC1B64 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -318,6 +319,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/usr/bin/perl -w";
 			shellScript = "# Xcode auto-versioning script for Subversion\n# Original version by Axel Andersson\n# Modifications by Daniel Jalkut <http://www.red-sweater.com/blog/23/automatic-build-sub-versioning-in-xcode>\n# Further improvements by John Bafford <http://bafford.com>\n# http://bafford.com/2010/11/17/automatic-build-versioning-in-xcode-with-subversion/\n\nuse strict;\n\ndie \"$0: Must be run from Xcode\" unless $ENV{\"BUILT_PRODUCTS_DIR\"};\n\n# Do nothing in a Debug build.\n#exit(0) if($ENV{'BUILD_STYLE'} ne 'Debug');\n\n# Get the current subversion revision number and use it to set the CFBundleVersion value\nmy $version;\nmy $REV;\n# my $svnVersion= '/opt/subversion/bin/svnversion';\nmy $svnVersion= '/usr/bin/svnversion';\nmy $INFO = \"$ENV{BUILT_PRODUCTS_DIR}/$ENV{INFOPLIST_PATH}\";\n\n# exit if there is no svnversion installed\n#exit(0) unless (-e $svnVersion);\n$version='sdkbuild' unless (-e $svnVersion);\n$REV = `$svnVersion -n ./` if(-e $svnVersion);\n\n# (Match the last group of digits and optional letter M/S); regex via Kevin \"Regex Nerd\" Ballard\n($REV =~ m/\\d+[MS]*$/) && ($version = $&);\n\n# die \"$0: No Subversion revision found\" unless $version;\n$version = 'sdkbuild' unless $version;\n\nmy $match = \"(<key>CFBundleVersion</key>\\n\\t<string>)((.*?)( \\(.*\\))?)(</string>)\";\n\nmy $info = `plutil -convert xml1 $INFO -o -`;\n#$info =~ s/$match/$1$3 ($version)$6/;\n$info =~ s/$match/$1$3.$version$6/;\n\nopen(FH, \"|plutil -convert binary1 -o $INFO -\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose(FH);\n\n$match = \"(<key>CFBundleShortVersionString</key>\\n\\t<string>)((.*?)( \\(.*\\))?)(</string>)\";\n\n$info = `plutil -convert xml1 $INFO -o -`;\n#$info =~ s/$match/$1$3 ($version)$6/;\n$info =~ s/$match/$1$3$version$6/;\n\nopen(FH, \"|plutil -convert binary1 -o $INFO -\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose(FH);\n\n";
+		};
+		C0CB54CF6A7F2D7019CC1B64 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		D16D9FB60207441BA9BBC93C /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
