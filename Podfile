@@ -1,7 +1,7 @@
 
 def import_pods
 	pod "AFNetworking", "~> 2.0"
-    pod "ScanAPI", :path=> "../ScanApiSDK-10.2.226"
+    pod "ScanAPI", :path=> "../ScanApiSDK-10.2.227"
 end
 
 platform :ios, '7.1'
