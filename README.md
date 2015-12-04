@@ -1,6 +1,6 @@
 # WarrantyChecker for iOS
 This simple iOS app is a sample code for checking a scanner Warranty and
-register it if the scanner is not already registered.
+for registering it if the scanner is not already registered.
 The registration requires the scanner Bluetooth address that is retrieved using
 ScanAPI SDK.
 
@@ -37,6 +37,36 @@ pod install
 Load the WarrantyChecker workspace (NOT PROJECT) in Xcode and compile and run.
 
 ## Description
+The Warranty Checker use a REST interface to know if a scanner is already
+registered and to extend its warranty.
+
+The REST requests need the credentials that is defined as follow:
+username: Developer ID
+password: App ID
+
+They need to be replaced with your own Developer ID and App ID that can be
+retrieved from Socket Developer Portal at: https://www.socketmobile.com/developers/welcome
+
+The Scanner Registration API document can also be downloaded from this portal by
+clicking on the Downloads button.
+
+The App ID must be created using this Socket Developer Portal, by clicking on
+the DCB Registration link in the right panel.
+
+Then modify the file MainViewController.m to fill it with your own credentials:
+```
+/**
+ *  Application ID and Developer ID
+ *  that are used to authenticate the requests
+ *  made to the Socket Mobile registration servers.
+ *
+ * PLEASE REPLACE THOSE BY YOUR DEVELOPER ID AND
+ * APPLICATION ID OTHERWISE THE REGISTRATION WILL
+ * BE VOID
+ */
+#define DEVELOPER_ID @"ed0587a9-d1ed-4638-bb4c-34e88780f047";
+#define APPLICATION_ID @"com.mycompany.myapp";
+```
 
 ## Implementation
 In this simple example the ScanApiHelper is "attached" to the main view
@@ -52,7 +82,7 @@ main view controller.
 This part is optional, but this SingleEntry app does support SoftScan. So it is
 enabled here by doing a postSeftSoftScanStatus.
 
-Ask for the ScanAPI version.
+Then it asks for the ScanAPI version.
 
 ### handle for ScanAPI version
 As example, when a ScanApiHelper set or get function is used it returns
@@ -79,7 +109,7 @@ that the application is waiting for a scanner to connect.
 There are actually 2 onDecodedData delegates defined in ScanApiHelperDelegate.
 The second one has the result as arguments and is the recommended one to use.
 
-The WarrantyChecker simply ignore any decoded data received through this
+The WarrantyChecker simply ignores any decoded data received through this
 delegate.
 
 
@@ -93,7 +123,7 @@ ScanApiHelper is provided as source code. It provides a set of very basic
 features like enabling disabling barcode symbologies.
 
 If a needed feature is not implemented by ScanApiHelper, the recommendation is
-to create an extension of ScanApiHelper and copy paste a feature similar from
+to create an extension of ScanApiHelper and copy paste of a similar feature from
 ScanApiHelper to the extended one.
 
 Following this recommendation will prevent to loose the modifications at the
@@ -111,8 +141,8 @@ The application using Warrant Checker object can provide its own logger as long
 as it implements this SKTLogger protocol.
 
 ### SKTCvi
-This object contains the Customer Voluntary Information that is required in
-order to extend the warranty of a scanner.
+This object contains the Customer Voluntary Information (CVI) that is required
+in order to extend the warranty of a scanner.
 This object has only properties.
 
 
@@ -134,7 +164,7 @@ This object describes an error. It has the following properties:
 - details
 
 ### SKTWarrantyCheckerDelegate
-Since the WarrantyChecker proiders an asynchronous client interface, these
+Since the WarrantyChecker provides an asynchronous client interface, these
 delegates are used to retrieve the response when a request has completed.
 Only 2 delegates are defined:
 scanner:didReturnAnError:
@@ -153,15 +183,15 @@ Its initialization requires a reference to an object that complies with its
 SKTWarrantyCheckerDelegate protocol.
 It has few properties required for making the request to the Warranty Checker
 service.
-One of its method is the checkWarrantyScannerBdAddress. This method actually
-request a warranty check about the scanner identified by its Bluetooth address
+One of its methods is the checkWarrantyScannerBdAddress. This method actually
+requests a warranty check about the scanner identified by its Bluetooth address
 passed as argument. If the request is successful, the delegate
 scanner:didReturnWarranty is invoked with the SKTWarranty as argument containing
 the actual warranty information of the scanner.
 
 The second method is registerScannerBdAddress which is actually the registration
 request with the CVI information. The scanner Bluetooth address and the SKTCvi
-are passed as argument of this method.
+are passed as arguments of this method.
 The scanner:didReturnWarranty is invoked in case of success. The SKTWarranty
 object has then its registered boolean set to true and expirationDate is reset
 to the new warranty extension date.
