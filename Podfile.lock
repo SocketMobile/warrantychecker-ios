@@ -20,20 +20,20 @@ PODS:
   - AFNetworking/UIKit (2.6.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - ScanAPI (10.3.36)
+  - ScanAPI (10.3.43)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
-  - ScanAPI (from `../ScanApiSDK-10.3.36`)
+  - ScanAPI (from `../ScanApiSDK-10.3.43`)
 
 EXTERNAL SOURCES:
   ScanAPI:
-    :path: ../ScanApiSDK-10.3.36
+    :path: ../ScanApiSDK-10.3.43
 
 SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
-  ScanAPI: 9e8e284d0a83add771f340289404b9a19626cd6c
+  ScanAPI: 2f1cc00ddb833c17af0f9e8ed02385aa98d1601a
 
-PODFILE CHECKSUM: a8b842db0b1fe3a8aed329673a6de8da2fdbfcfc
+PODFILE CHECKSUM: 386214693de47320e2bab256ffb6cc5476ef4972
 
 COCOAPODS: 1.0.0
